@@ -1,0 +1,184 @@
+@font-face {
+    font-family: 'Breaking bad';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Breaking bad'), url('Heart_Breaking_Bad.woff') format('woff');
+}
+
+body {
+    background-color: #0a0a0a;
+}
+
+.title_logo {
+    font-family: 'Breaking bad', sans-serif;
+    font-size: 2.4em;
+    margin-left: 10px;
+    padding: 5px;
+    background-color: #fff;
+}
+
+
+@media screen and (max-width: 30em) {
+    .nav {
+        justify-content: center;
+    }
+}
+
+
+header {
+    background: #0a0a0a;
+}
+
+.logo_home {
+    position: absolute;
+    width: 155px;
+    right: -47px;
+    top: -30px;
+}
+
+footer {
+    background: #0a0a0a;
+    padding: 15px;
+    min-height: 60px;
+}
+
+main {
+    margin-top: 80px;
+    margin-bottom: 60px;
+}
+
+.card_item {
+    box-sizing: border-box;
+    background: linear-gradient(0deg, transparent, rgba(9, 9, 121, 0) 35%, rgba(0, 212, 255, 0) 100%);
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: 0% 0%;
+    width: 100%;
+    height: 450px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    padding: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.information {
+    z-index: 9;
+    position: relative;
+    width: 50%;
+}
+
+.information h3 {
+    color: white;
+    font-size: 1.4rem;
+}
+
+.info h1 {
+    color: white;
+    font-size: 2rem;
+}
+
+.info h2 {
+    width: 150px;
+    display: inline-block;
+}
+
+.img_pokemon {
+    width: 70px;
+    position: absolute;
+    right: 4px;
+    bottom: 1px;
+}
+
+.bg-badge {
+    background-color: rgba(65, 13, 13, 0.805);
+}
+
+.btn-material {
+    position: absolute;
+    bottom: 40px;
+    right: 50%;
+    margin-right: -24px;
+    border-radius: 24px;
+    width: 48px;
+    height: 48px;
+    background-color: rgba(65, 13, 13, 0.805);
+    font-weight: bold;
+    font-size: 1em;
+    border: none;
+}
+
+#conteudo {
+    background-color: #0a0a0a;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    top: 0px;
+    position: fixed;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-size: 0% 0%;
+}
+
+.load {
+    background-image: url("../imgs/load.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 500px;
+}
+
+#btVoltar {
+    width: 24px;
+    opacity: 0.5;
+}
+
+#btVoltar:hover {
+    opacity: 1;
+
+}
+
+.info {
+    padding: 15px;
+}
+
+.info h3 {
+    color: white;
+}
+
+.card_info {
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    position: absolute;
+    height: 55%;
+    bottom: 0px;
+}
+
+.detalhes {
+    position: relative;
+    overflow: scroll;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 40px;
+    overflow: scroll;
+    height: 100%;
+}
+
+.detalhes h4, .detalhes p{
+    color: #fafafa;
+}
+
+#conteudo_nome{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+#conteudo_numero{
+    margin-left: 10px;
+}
+
+
+#btCarregarMais {
+    margin-bottom: 30px;
+}
+

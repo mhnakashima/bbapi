@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+
+    <title>Breaking Bad API - Michael Nakashima - PUC Minas</title>
+
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Pokedex">
+    <link rel="apple-touch-icon" href="icons/152.png">
+
+    <meta name="description" content="Breaking Bad">
+    <meta name="theme-color" content="#ff5f66" />
+</head>
+
+<body>
+
+    <div id="conteudo" style="display: none;">
+
+        <div class="info_pokemon2">
+
+            <img id="btVoltar" src="imgs/arrow_left.png">
+
+            <h1 id="conteudo_nome">---</h1>
+            <h3 id="conteudo_numero">#000</h3>
+            <h2><span class="badge rounded-pill bg-alert-poke" id="conteudo_tipo">Success</span></h2>
+        </div>
+
+        <div class="card_info">
+
+            <img id="conteudo_img" src="imgs/offline_pokemon.png"
+                class="img_pokemon2 animate__animated animate__bounce">
+
+            <div class="detalhe_pokemon">
+                <h4>Descrição:</h4>
+                <p id="conteudo_descricao">---</p>
+
+                <div class="alert alert-primary" role="alert">
+                    <strong>Ataque:</strong> <span id="conteudo_ataque">---</span>
+                </div>
+
+                <div class="alert alert-secondary" role="alert">
+                    <strong>Defesa:</strong> <span id="conteudo_defesa">---</span>
+                </div>
+
+                <div class="alert alert-success" role="alert">
+                    <strong>Altura:</strong> <span id="conteudo_altura">---</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <header class="container-fluid fixed-top">
+        <h1 class="title_logo">Pokedex</h1>
+        <img src="imgs/logo.png" class="logo_home rotate-center">
+    </header>
+
+    <main class="container">
+        <div id="row">
+            <div id="col-12">
+                <div class="alert alert-warning" role="alert">
+                    Você está acessando a versão offline da aplicação. Conecte a internet para acessar os conteúdos
+                    completos.
+                </div>
+            </div>
+        </div>
+
+        <div id="resultados" class="row load">
+
+        </div>
+
+        <div id="col-12">
+            <div class="d-grid gap-2">
+                <button class="btn btn-outline-secondary" id="btCarregarMais" type="button">Ver Mais</button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="container-fluid fixed-bottom">
+        <input type="button" value="Instalar App" hidden id="btInstall" class="btn btn-success">
+        <input type="button" value="+" class="btn btn-success btn-material">
+    </footer>
+
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+
+        /*
+        #
+        # Globais
+        #
+        */
+        var quant = 10;
+        var contar = 1;
+        const endpoint_pokemon = "/data.json";
+        var tela_detalhe = document.getElementById("conteudo");
+        var resultados = document.getElementById("resultados");
+        var data_json;
+        var CACHE_DINAMICO = "pokedex_dinamico";
+
+        /*
+        #
+        # Requisição AJAX
+        #
+        */
+        function carregar_pokemon() {
+
+            data_json = JSON.parse(localStorage.getItem(CACHE_DINAMICO))
+
+            if (data_json.length > 0) {
+                resultados.className = "row";
+                //Carga inicial
+                imprimir();
+            }
+        }
+
+        carregar_pokemon();
+
+        var files_img_pokemons = [];
+
+        function imprimir() {
+
+            let html_conteudo = "";
+            let limite;
+            if ((contar + quant) < data_json.length) {
+                limite = (contar + quant);
+            } else {
+                limite = data_json.length;
+                btCarregarMais.style.display = "none";
+            }
+
+            for (let i = contar; i < limite; i++) {
+                //Montar Card
+                html_conteudo += montarCard(i, data_json[i].name, data_json[i].type, data_json[i].imageUrl);
+
+            }
+
+            resultados.innerHTML += html_conteudo;
+
+            contar += quant;
+        }
+
+        /*
+        #
+        # Comportamento Botões
+        #
+        */
+
+        let btVoltar = document.getElementById("btVoltar");
+
+        btVoltar.addEventListener("click", function () {
+            let color = tela_detalhe.className.substring(tela_detalhe.className.indexOf("color_"));
+            tela_detalhe.className = "animate__animated animate__bounceOutLeft " + color;
+
+            setTimeout(function () { document.getElementById("conteudo_img").style.display = "none"; }, 500);
+        });
+
+        let btCarregarMais = document.getElementById("btCarregarMais");
+
+        btCarregarMais.addEventListener("click", function () {
+            imprimir();
+        });
+
+        function btCard(id) {
+            document.getElementById("conteudo").style.display = "block";
+            document.getElementById("conteudo").style.backgroundImage = "url('" + jsonData[id].img + "')";
+            document.getElementById("conteudo_nome").innerHTML = jsonData[id].nickname;
+            document.getElementById("conteudo_numero").innerHTML = "#" + id;
+        }
+
+
+        /*
+        #
+        # Sistema de Template
+        #
+        */
+
+        function montarCard(id, nome, tipo, img) {
+            return `<div class="col-12 col-md-3" onClick="javascript:onClickCard(\'' + ${id} + '\');" data-id="' + ${id} + '"><div class="card_item" style="background: linear-gradient(0deg, transparent, rgba(9,9,121,0) 35%, rgba(0,212,255,0) 100%))"><div class="information"><h3>${nome}</h3><span class="badge rounded-pill bg-badge">${tipo}</span></div></div></div>`;
+        }
+
+
+        /*
+        #
+        # Funções Extras
+        #
+        */
+        function padLeadingZeros(num, size) {
+            var s = num + "";
+            while (s.length < size) s = "0" + s;
+            return s;
+        }
+
+    </script>
+
+
+
+</body>
+
+</html>
